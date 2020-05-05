@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  fake-transational-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: "dual"
+      POSTGRES_PASSWORD: "dual"
+      POSTGRES_DB: "dual"
+    ports:
+      - "15432:5432"
+    networks:
+      - bi-compose-network
+
+  pg-admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dual@dual.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "dual"
+    ports:
+      - "16543:80"
+    depends_on:
+      - fake-transational-db
+    networks:
+      - bi-compose-network
+  
+
+networks: 
+  bi-compose-network:
+    driver: bridge
